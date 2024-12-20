@@ -8,7 +8,7 @@ import { addBooking, getSingleBooking } from './controllers/booking'
 dotenv.config()
 const app = express()
 app.use(cors({
-  origin: "https://travel-world-frontend.vercel.app/",
+  origin: "https://travel-world-frontend.vercel.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 
