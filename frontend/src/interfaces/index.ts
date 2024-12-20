@@ -3,7 +3,7 @@ export interface Package {
   title: string;
   description: string;
   price: number;
-  availableDates: string;
+  availableDates: string[];
   image: string;
 
 }

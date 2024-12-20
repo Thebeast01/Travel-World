@@ -17,7 +17,7 @@ export const ManagePackages = () => {
     title: "",
     description: "",
     price: 0,
-    availableDates: [],
+    availableDates: [] as string[],
     image: "",
   });
 
