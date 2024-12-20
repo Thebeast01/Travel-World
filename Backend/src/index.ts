@@ -18,9 +18,7 @@ app.use(express.json(
     limit: '50mb'
   }
 ))
-
 // Route for login and registero
-
 
 app.use('/api/v1/auth', authRoutes)
 // Route only for admin
