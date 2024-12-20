@@ -15,7 +15,6 @@ export const Admin = () => {
     <>
       <Navbar />
       <div className="flex">
-        {/* Sidebar */}
         <div
           className={`bg-gray-800 text-white ${isCollapsed ? "w-16" : "w-64"} transition-all duration-300 min-h-screen p-4 flex flex-col`}
         >
@@ -52,7 +51,6 @@ export const Admin = () => {
           </button>
         </div>
 
-        {/* Main Content */}
         <div className="flex-1 bg-gray-100 p-8">
           {activeTab === "viewBookings" && <ViewBooking />}
           {activeTab === "managePackages" && <ManagePackages />}
