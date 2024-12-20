@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
-
+import dotenv from "dotenv";
+dotenv.config();
+const connectToDatabase = async () => {
+  try {
+    console.log(process.env.DB_URI)
+    await mongoose.connect(process.env.DB_URI as string)
+  } catch (error) {
+    throw new Error("Error Occuer")
+  }
+}
+connectToDatabase()
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },

@@ -5,34 +5,22 @@ import cors from 'cors'
 import adminRoute from './routes/adminRoutes'
 import { getOnePackage, getPackages } from './controllers/packageController'
 import { addBooking, getSingleBooking } from './controllers/booking'
-import mongoose from 'mongoose'
 dotenv.config()
 const app = express()
+app.use(cors({
+  origin: "https://travel-world-frontend.vercel.app/",
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+
+}))
 app.use(express.json(
   {
     limit: '50mb'
   }
 ))
-const connectToDatabase = async () => {
-  try {
-    if (!process.env.DB_URI) {
-      throw new Error("Database URI is not provided")
-    }
-    await mongoose.connect(process.env.DB_URI as string
-    )
-  } catch (error) {
-    throw new Error("Error Occuer")
-  }
-}
-connectToDatabase()
+
 // Route for login and registero
 
-app.use(cors({
-  origin: 'https://travel-world-frontend.vercel.app/',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-
-}))
 
 app.use('/api/v1/auth', authRoutes)
 // Route only for admin
