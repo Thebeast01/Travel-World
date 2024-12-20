@@ -8,14 +8,12 @@ import { Navbar } from "../components/Navbar";
 const generateInvoicePDF = (packageDetail: any, bookingDetails: any) => {
   const doc = new jsPDF();
 
-  // Header Section
   doc.setFontSize(20);
   doc.text("TravelWorld", 10, 15); // Company name
   doc.setFontSize(12);
   doc.text("Booking Invoice", 10, 25);
   doc.line(10, 27, 200, 27); // Divider line
 
-  // Booking Details Section
   const bookingData = [
     ["Booking ID", bookingDetails.id],
     ["Customer Name", bookingDetails.name],
@@ -36,7 +34,6 @@ const generateInvoicePDF = (packageDetail: any, bookingDetails: any) => {
     headStyles: { fillColor: [72, 144, 255] }, // Table header background color
   });
 
-  // Package Details Section
   const packageData = [
     ["Package Title", packageDetail.title],
     ["Description", packageDetail.description],
@@ -45,13 +42,12 @@ const generateInvoicePDF = (packageDetail: any, bookingDetails: any) => {
     ["Total Price", `$${bookingDetails.TotalPrice}`],
   ];
 
-  const lastTableFinalY = doc.lastAutoTable?.finalY ?? 40; // Use 40 as fallback if undefined
-  doc.autoTable({
+  const lastTableFinalY = doc.lastAutoTable?.finalY ?? 40; doc.autoTable({
     head: [["Package Information", ""]],
     body: packageData,
-    startY: lastTableFinalY + 10, // Add some margin after the previous table
+    startY: lastTableFinalY + 10,
     styles: { fontSize: 10 },
-    headStyles: { fillColor: [72, 144, 255] }, // Table header background color
+    headStyles: { fillColor: [72, 144, 255] },
   });
 
   const footerStartY = doc.lastAutoTable?.finalY ?? 60; // Use 60 as fallback if undefined
@@ -59,8 +55,7 @@ const generateInvoicePDF = (packageDetail: any, bookingDetails: any) => {
   doc.text("Thank you for booking with TravelWorld!", 10, footerStartY + 20);
   doc.text("Visit us at: www.travelworld.com", 10, footerStartY + 30);
 
-
-  doc.save(`invoice_${bookingDetails.id}.pdf`);
+  doc.save(`invoice.pdf`);
 };
 
 export const InvoicePage = () => {
