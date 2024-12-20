@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect('mongodb+srv://mohammadsaif0847:9seamzIshoryU4yg@travel.8uxqd.mongodb.net/?retryWrites=true&w=majority&appName=Travel')
+mongoose.connect(process.env.DB_URI as string,)
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
