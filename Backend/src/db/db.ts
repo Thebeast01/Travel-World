@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.DB_URI as string,)
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },

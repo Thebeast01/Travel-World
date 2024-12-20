@@ -24,7 +24,7 @@ export const ManagePackages = () => {
   const fetchPackages = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:3000/api/v1/packages");
+      const response = await axios.get("https://travel-world-murex.vercel.app/api/v1/packages");
       setPackages(response.data);
       setLoading(false);
     } catch (error) {
@@ -40,7 +40,7 @@ export const ManagePackages = () => {
   const onDelete = async (id: string) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v1/admin/package/${id}`
+        `https://travel-world-murex.vercel.app/api/v1/admin/package/${id}`
       );
       Swal.fire({
         icon: "success",
@@ -67,7 +67,7 @@ export const ManagePackages = () => {
   const handleUpdateSubmit = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/v1/admin/package/${updatedData._id}`,
+        `https://travel-world-murex.vercel.app/api/v1/admin/package/${updatedData._id}`,
         updatedData
       );
       Swal.fire({

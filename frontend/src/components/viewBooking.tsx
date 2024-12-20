@@ -12,7 +12,7 @@ export const ViewBooking = () => {
   const fetchBookingData = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('http://localhost:3000/api/v1/admin/bookings')
+      const response = await axios.get('https://travel-world-murex.vercel.app/api/v1/admin/bookings')
       console.log(response.data)
       setBookingData(response.data)
       setLoading(false)
