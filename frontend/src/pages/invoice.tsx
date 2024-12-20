@@ -74,11 +74,11 @@ export const InvoicePage = () => {
     const fetchBookingDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:3000/api/v1/bookings/${bookingId}`);
+        const response = await axios.get(`https://travel-world-gamma.vercel.app/api/v1/bookings/${bookingId}`);
         const booking = response.data;
         console.log(booking)
         setBookingDetails(booking);
-        const packageDetail = await axios.get(`http://localhost:3000/api/v1/package/${booking.packageId}`);
+        const packageDetail = await axios.get(`https://travel-world-gamma.vercel.app/api/v1/package/${booking.packageId}`);
         setPackageDetail(packageDetail.data.onePackage);
         console.log(packageDetail.data.onePackage)
       } catch (err: any) {

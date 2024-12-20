@@ -47,7 +47,7 @@ export const AddPackage = () => {
   const addData = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://travel-world-murex.vercel.app/api/v1/admin/package", packageData);
+      const response = await axios.post("https://travel-world-gamma.vercel.app/api/v1/admin/package", packageData);
       if (response.data.success) {
         Swal.fire({
           title: "Success",

@@ -14,7 +14,7 @@ export const Home = () => {
     try {
       setLoading(true)
 
-      const response = await axios.get('https://travel-world-murex.vercel.app/api/v1/packages')
+      const response = await axios.get('https://travel-world-gamma.vercel.app/api/v1/packages')
       setPackages(response.data)
       console.log(packages)
     } catch (error) {
