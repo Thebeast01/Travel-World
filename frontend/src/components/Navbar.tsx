@@ -1,6 +1,7 @@
-
+import { useNavigate } from "react-router-dom"
 export const Navbar = () => {
 
+  const navigate = useNavigate()
   return (
     <>
       <nav className="bg-gray-800 p-4">
@@ -10,7 +11,7 @@ export const Navbar = () => {
           </li>
           <li>
             <a href="/" className="text-white px-5 text-xl">Home</a>
-            <a href="/admin" className="text-white px-5 text-xl">Admin</a>
+            <button onClick={() => navigate('/admin')} className="text-white px-5 text-xl">Admin</button>
           </li>
         </ul>
       </nav>
