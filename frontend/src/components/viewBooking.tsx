@@ -6,7 +6,7 @@ import { Pagination } from "./pagination";
 
 export const ViewBooking = () => {
   const [bookingData, setBookingData] = useState([])
-  const [bookingPerPage, setBookingPerPage] = useState(6);
+  const bookingPerPage: number = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false)
   const fetchBookingData = async () => {
