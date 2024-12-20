@@ -28,7 +28,10 @@ connectToDatabase()
 // Route for login and registero
 
 app.use(cors({
-  origin: 'https://travel-world-frontend.vercel.app/'
+  origin: 'https://travel-world-frontend.vercel.app/',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+
 }))
 
 app.use('/api/v1/auth', authRoutes)
