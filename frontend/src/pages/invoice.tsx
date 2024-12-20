@@ -19,7 +19,12 @@ const generateInvoicePDF = (packageDetail: any, bookingDetails: any) => {
   const bookingData = [
     ["Booking ID", bookingDetails.id],
     ["Customer Name", bookingDetails.name],
-    ["Booking Date", bookingDetails.bookingDate ? new Date(bookingDetails.bookingDate).toLocaleDateString() : "N/A"],
+    [
+      "Booking Date",
+      bookingDetails.bookingDate
+        ? new Date(bookingDetails.bookingDate).toLocaleDateString()
+        : "N/A",
+    ],
     ["Special Request", bookingDetails.specialRequest || "None"],
   ];
 
@@ -40,18 +45,20 @@ const generateInvoicePDF = (packageDetail: any, bookingDetails: any) => {
     ["Total Price", `$${bookingDetails.TotalPrice}`],
   ];
 
+  const lastTableFinalY = doc.lastAutoTable?.finalY ?? 40; // Use 40 as fallback if undefined
   doc.autoTable({
     head: [["Package Information", ""]],
     body: packageData,
-    startY: doc.lastAutoTable.finalY + 10, // Add some margin after the previous table
+    startY: lastTableFinalY + 10, // Add some margin after the previous table
     styles: { fontSize: 10 },
     headStyles: { fillColor: [72, 144, 255] }, // Table header background color
   });
 
-  // Footer Section
+  const footerStartY = doc.lastAutoTable?.finalY ?? 60; // Use 60 as fallback if undefined
   doc.setFontSize(10);
-  doc.text("Thank you for booking with TravelWorld!", 10, doc.lastAutoTable.finalY + 20);
-  doc.text("Visit us at: www.travelworld.com", 10, doc.lastAutoTable.finalY + 30);
+  doc.text("Thank you for booking with TravelWorld!", 10, footerStartY + 20);
+  doc.text("Visit us at: www.travelworld.com", 10, footerStartY + 30);
+
 
   doc.save(`invoice_${bookingDetails.id}.pdf`);
 };

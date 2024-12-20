@@ -9,7 +9,7 @@ export const Home = () => {
   const [packages, setPackages] = useState<Package[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [packagesPerPage, setPackagesPerPage] = useState<number>(4)
+  const packagesPerPage: number = 4
   const fetchPackages = async () => {
     try {
       setLoading(true)
