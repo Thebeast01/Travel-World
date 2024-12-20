@@ -18,8 +18,7 @@ const connectToDatabase = async () => {
     if (!process.env.DB_URI) {
       throw new Error("Database URI is not provided")
     }
-    await mongoose.connect(process.env.DB_URI as string
-    )
+    await mongoose.connect(process.env.DB_URI)
   } catch (error) {
     throw new Error("Error Occuer")
   }
