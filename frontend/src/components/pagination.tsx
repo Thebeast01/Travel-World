@@ -1,4 +1,11 @@
-export const Pagination = ({ totalPackages, packagePerPage, setCurrentPage, currentPage }) => {
+
+interface PaginationProps {
+  totalPackages: number;
+  packagePerPage: number;
+  setCurrentPage: (page: number) => void;
+  currentPage: number;
+}
+export const Pagination = ({ totalPackages, packagePerPage, setCurrentPage, currentPage }: PaginationProps) => {
   let pages = []
   for (let i = 1; i <= Math.ceil(totalPackages / packagePerPage); i++) {
     pages.push(i)
