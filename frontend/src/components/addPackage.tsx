@@ -4,12 +4,13 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 export const AddPackage = () => {
+  const [preview, setPreview] = useState("");
   const [packageData, setPackageData] = useState({
     title: "",
     description: "",
     price: "",
     availableDates: [] as string[],
-    image: "",
+    image: File,
   });
   const [newDate, setNewDate] = useState("");
 
@@ -30,24 +31,25 @@ export const AddPackage = () => {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPackageData((prev) => ({
-          ...prev,
-          image: reader.result as string,
-        }));
-      };
-      reader.readAsDataURL(file);
+      setPackageData({ ...packageData, image: file });
+      setPreview(URL.createObjectURL(file));
     }
-  };
+  }
 
   const addData = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(packageData);
+
     try {
-      const response = await axios.post("https://travel-world-gamma.vercel.app/api/v1/admin/package", packageData);
+
+      const response = await axios.post(`${process.env.REACT_API_ENDPOINT}/api/v1/admin/package`, packageData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.data.success) {
         Swal.fire({
           title: "Success",
@@ -59,7 +61,7 @@ export const AddPackage = () => {
           description: "",
           price: "",
           availableDates: [],
-          image: "",
+          image: File || null,
         });
       }
     } catch (error) {
@@ -135,13 +137,13 @@ export const AddPackage = () => {
               type="file"
               accept="image/*"
 
-              onChange={handleFileChange}
+              onChange={handleImageChange}
               className="border border-gray-300 p-2 rounded-md"
               required
             />
-            {packageData.image && (
+            {preview && (
               <img
-                src={packageData.image}
+                src={preview}
                 alt="Preview"
                 className="mt-4 w-40 h-40 object-cover border"
               />

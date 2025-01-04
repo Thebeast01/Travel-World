@@ -1,13 +1,18 @@
 import { Request, Response } from 'express'
+import fs from 'fs'
 import { TravelPackage } from '../db/db'
+import { uploadImageOnCloudinary } from '../utils/cloudinary'
 export const addPackage = async (req: Request, res: Response) => {
   const {
-    title, description, price, availableDates, image
+    title, description, price, availableDates
   } = req.body
 
+  const localImagePath = req.file?.path
+  console.log("This is localImagePath", localImagePath)
   try {
+    const imageUrl = await uploadImageOnCloudinary(localImagePath)
     const newPackage = new TravelPackage({
-      title, description, price, availableDates, image
+      title, description, price, availableDates, image: imageUrl
     })
     const savePackage = await newPackage.save()
     res.json({ success: true, savePackage })
