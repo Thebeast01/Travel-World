@@ -2,13 +2,12 @@
   "version": 2,
   "builds": [
     {
-      "env" : {
-        "REACT_APP_API_URL" :"https://travel-world-gamma.vercel.app" 
-      },
+      
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "dist" }
-    }
+    },
+    
   ],
   "routes": [
     {
