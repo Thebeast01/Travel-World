@@ -10,7 +10,7 @@ export const AddPackage = () => {
     description: "",
     price: "",
     availableDates: [] as string[],
-    image: File,
+    image: null as File | null,
   });
   const [newDate, setNewDate] = useState("");
 
@@ -61,7 +61,7 @@ export const AddPackage = () => {
           description: "",
           price: "",
           availableDates: [],
-          image: File || null,
+          image: null,
         });
       }
     } catch (error) {
