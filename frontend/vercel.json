@@ -12,5 +12,10 @@
       "src": "/(.*)",
       "dest": "/dist/index.html"
     }
-  ]
+  ],
+  "build" : {
+      "env" : {
+        "REACT_APP_API_ENDPOINT": "https://travel-world-gamma.vercel.app"
+      }
+  }
 }
