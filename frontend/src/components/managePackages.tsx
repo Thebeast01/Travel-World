@@ -24,7 +24,7 @@ export const ManagePackages = () => {
   const fetchPackages = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_API_ENDPOINT}/api/v1/packages`);
+      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/packages`);
       setPackages(response.data);
       setLoading(false);
     } catch (error) {
@@ -40,7 +40,7 @@ export const ManagePackages = () => {
   const onDelete = async (id: string) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_API_ENDPOINT}/api/v1/admin/package/${id}`
+        `${process.env.REACT_APP_API_ENDPOINT}/api/v1/admin/package/${id}`
       );
       Swal.fire({
         icon: "success",
@@ -67,7 +67,7 @@ export const ManagePackages = () => {
   const handleUpdateSubmit = async () => {
     try {
       const response = await axios.put(
-        `${process.env.REACT_API_ENDPOINT}/api/v1/admin/package/${updatedData._id}`,
+        `${process.env.REACT_APP_API_ENDPOINT}/api/v1/admin/package/${updatedData._id}`,
         updatedData
       );
       Swal.fire({

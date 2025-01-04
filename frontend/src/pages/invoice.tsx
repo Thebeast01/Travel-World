@@ -69,11 +69,11 @@ export const InvoicePage = () => {
     const fetchBookingDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${process.env.REACT_API_ENDPOINT}/api/v1/bookings/${bookingId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/bookings/${bookingId}`);
         const booking = response.data;
         console.log(booking)
         setBookingDetails(booking);
-        const packageDetail = await axios.get(`${process.env.REACT_API_ENDPOINT}/api/v1/package/${booking.packageId}`);
+        const packageDetail = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/package/${booking.packageId}`);
         setPackageDetail(packageDetail.data.onePackage);
         console.log(packageDetail.data.onePackage)
       } catch (err: any) {
