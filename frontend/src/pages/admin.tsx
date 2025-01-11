@@ -12,7 +12,7 @@ export const Admin = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Navbar />
       <div className="flex">
         <div
@@ -57,7 +57,7 @@ export const Admin = () => {
           {activeTab === "addPackage" && <AddPackage />}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
