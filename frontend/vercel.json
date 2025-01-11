@@ -9,13 +9,15 @@
   ],
   "routes": [
     {
+      "src": "/assets/(.*)",
+      "dest": "/dist/assets/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/dist/index.html"
+      "dest": "/dist/$1"
     }
   ],
-  "build" : {
-      "env" : {
-        "REACT_APP_API_ENDPOINT": "https://travel-world-gamma.vercel.app"
-      }
+  "env": {
+    "VITE_API_URL": "https://travel-world-gamma.vercel.app"
   }
 }
