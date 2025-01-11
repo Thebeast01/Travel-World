@@ -9,6 +9,7 @@ dotenv.config()
 const app = express()
 app.use(cors({
   origin: "https://travel-world-frontend.vercel.app",
+  //origin: "*",
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 

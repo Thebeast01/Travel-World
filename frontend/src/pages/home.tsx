@@ -4,17 +4,18 @@ import { useEffect, useState } from "react"
 import { PackagesCard } from "../components/packagesCard";
 import { Package } from "../interfaces";
 import { Pagination } from "../components/pagination";
-
+import { config } from '../config/env'
 export const Home = () => {
   const [packages, setPackages] = useState<Package[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const packagesPerPage: number = 4
+
   const fetchPackages = async () => {
     try {
       setLoading(true)
-
-      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/packages`)
+      console.log(config.apiUrl)
+      const response = await axios.get(`${config.apiUrl}/api/v1/packages`)
       setPackages(response.data)
       console.log(packages)
     } catch (error) {

@@ -3,6 +3,7 @@ import { Package } from "../interfaces";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { PackagesCard } from "./packagesCard";
+import { config } from "../config/env";
 import { Pagination } from "./pagination";
 import Swal from "sweetalert2";
 
@@ -24,7 +25,7 @@ export const ManagePackages = () => {
   const fetchPackages = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/packages`);
+      const response = await axios.get(`${config.apiUrl}/api/v1/packages`);
       setPackages(response.data);
       setLoading(false);
     } catch (error) {
@@ -40,7 +41,7 @@ export const ManagePackages = () => {
   const onDelete = async (id: string) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_API_ENDPOINT}/api/v1/admin/package/${id}`
+        `${config.apiUrl}/api/v1/admin/package/${id}`
       );
       Swal.fire({
         icon: "success",
@@ -67,7 +68,7 @@ export const ManagePackages = () => {
   const handleUpdateSubmit = async () => {
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_ENDPOINT}/api/v1/admin/package/${updatedData._id}`,
+        `${config.apiUrl}/api/v1/admin/package/${updatedData._id}`,
         updatedData
       );
       Swal.fire({

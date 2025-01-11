@@ -1,5 +1,6 @@
 
 import axios from "axios";
+import { config } from '../config/env'
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -45,7 +46,7 @@ export const AddPackage = () => {
 
     try {
 
-      const response = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/admin/package`, packageData, {
+      const response = await axios.post(`${config.apiUrl}/api/v1/admin/package`, packageData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

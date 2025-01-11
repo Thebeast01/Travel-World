@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Navbar } from "../components/Navbar";
 import Swal from "sweetalert2";
+import config from "../config/env";
 
 export const PackageDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,7 +25,7 @@ export const PackageDetails = () => {
   const fetchPackageDetail = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/package/${id}`);
+      const response = await axios.get(`${config.apiUrl}/api/v1/package/${id}`);
       setPackageDetail(response.data.onePackage);
     } catch (error) {
       console.error(error);
@@ -44,7 +45,7 @@ export const PackageDetails = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/booking`, {
+      const response = await axios.post(`${config.apiUrl}/api/v1/booking`, {
         ...bookingData, TotalPrice: packageDetail.price * bookingData.numberOfTravelers,
         packageId: id,
       });
