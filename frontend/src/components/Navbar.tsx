@@ -4,7 +4,7 @@ export const Navbar = () => {
   const navigate = useNavigate()
   return (
     <>
-      <nav className="bg-gray-800 p-4 min-w-[585px]">
+      <nav className="bg-gray-800 p-4 min-w-[585px] sm:w-screen">
         <ul className="flex justify-between">
           <li>
             <h1 className="text-slate-50 text-3xl italic ">Travel World</h1>
