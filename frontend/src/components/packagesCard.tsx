@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { packageCardProps } from "../interfaces"
 
 export const PackagesCard = ({
-  _id,
+  id,
   title,
   description,
   price,
@@ -13,7 +13,7 @@ export const PackagesCard = ({
 
 }: packageCardProps,) => {
   return (
-    <Link to={`/package/${_id}`}>
+    <Link to={`/package/${id}`}>
       <div className="w-[300px] max-w-screen border-black border-1 rounded-lg overflow-hidden">
         <div className="flex flex-col">
           <div className="flex items-center justify-center h-[250px]">
@@ -46,7 +46,7 @@ export const PackagesCard = ({
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  onUpdate(_id);
+                  onUpdate(id);
                 }}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >
@@ -57,7 +57,7 @@ export const PackagesCard = ({
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  onDelete(_id);
+                  onDelete(id);
                 }}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
               >

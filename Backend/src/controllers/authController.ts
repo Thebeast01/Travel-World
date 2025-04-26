@@ -1,39 +1,85 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { User } from "../db/db";
-export const register = async (req: Request, res: Response) => {
+import bcrypt from "bcryptjs";
+import { prisma } from "../db/db";
 
-  const { name, email, password, location } = req.body
-  const newUser = new User({
-    name, email, password, location
-  })
-  const saveUser = await newUser.save();
+export const register = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, password, name, location } = req.body
+    if (!email || !password || !name || !location) {
+      res.status(400).json({ message: "All fields are required" })
+      return
+    }
+    // Check if user with same email already exist in database
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email
+      }
+    })
+    if (user) {
+      res.status(400).json({ message: "User with same email already exist" })
+      return
+    }
+    // Password Hashing
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        name,
+        location
+      }
+    })
+    res.status(201).json({ message: "User Created Successfully", data: newUser })
+    return
+  }
+  catch (e) {
+    res.status(500).json({ message: e })
+    return
 
-  res.json(saveUser)
+  }
+
 }
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email } = req.body
-    const user = await User.findOne({
-      email: email
+    const { email, password } = req.body
+    if (!email || !password) {
+      res.status(400).json({
+        message: "All Fields are required"
+      })
+      return;
+    }
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email
+      }
     })
     if (!user) {
-      res.json("User Not Found")
+      res.status(400).json({
+        message: "User not found , Please register first"
+      })
       return
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET as string)
-    res.header('Authorization', token).json({
-      message: "Login Successfull",
-      success: true,
-      token
-    })
+    const isPasswordValid = await bcrypt.compare(password, user.password)
+    if (!isPasswordValid) {
+      res.status(400).json({
+        message: "Invalid Password"
+      })
+      return
+    }
+    console.log("Is Password Valid", isPasswordValid)
 
-  } catch (error) {
-    console.log(error)
-    res.json({
-      error
-    })
+    const jwtToken = jwt.sign({
+      id: user.id,
+    }, process.env.JWT_SECRET as string, { expiresIn: "10d" })
+    console.log("Token", jwtToken)
+    res.cookie("token", jwtToken)
+    res.status(200).json({ message: "Login Successfull" })
+  } catch (e) {
+    console.log(e)
+    res.status(500).json({ message: e })
+    return
   }
 
-}
+} 

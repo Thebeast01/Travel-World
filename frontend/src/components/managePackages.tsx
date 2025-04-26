@@ -14,7 +14,7 @@ export const ManagePackages = () => {
   const packagesPerPage: number = 4;
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
   const [updatedData, setUpdatedData] = useState<Package>({
-    _id: "",
+    id: "",
     title: "",
     description: "",
     price: 0,
@@ -68,7 +68,7 @@ export const ManagePackages = () => {
   const handleUpdateSubmit = async () => {
     try {
       const response = await axios.put(
-        `${config.apiUrl}/api/v1/admin/package/${updatedData._id}`,
+        `${config.apiUrl}/api/v1/admin/package/${updatedData.id}`,
         updatedData
       );
       Swal.fire({
@@ -103,14 +103,14 @@ export const ManagePackages = () => {
           ) : (
             currentPackages.map((packageItem: Package, index) => (
               <PackagesCard
-                _id={packageItem._id}
+                id={packageItem.id}
                 key={index}
                 title={packageItem.title}
                 description={packageItem.description}
                 price={packageItem.price}
                 availableDates={packageItem.availableDates}
                 image={packageItem.image}
-                onDelete={() => onDelete(packageItem._id)}
+                onDelete={() => onDelete(packageItem.id)}
                 onUpdate={() => openUpdateModal(packageItem)}
               />
             ))

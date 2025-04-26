@@ -31,7 +31,7 @@ export const Home = () => {
   const lastPageIndex = currentPage * packagesPerPage;
 
   const firstPostIndex = lastPageIndex - packagesPerPage;
-  const currentPackages = packages.slice(firstPostIndex, lastPageIndex)
+  const currentPackages = packages?.slice(firstPostIndex, lastPageIndex)
   console.log('currentPackages', currentPackages)
 
   return (
@@ -43,7 +43,7 @@ export const Home = () => {
             loading ? <p>Loading...</p> :
               currentPackages.map((packageItem: Package, index) => (
                 <PackagesCard
-                  _id={packageItem._id}
+                  id={packageItem.id}
                   key={index}
                   title={packageItem.title}
                   description={packageItem.description}

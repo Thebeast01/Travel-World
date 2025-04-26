@@ -1,17 +1,18 @@
 import express from 'express'
+import CookieParser from 'cookie-parser'
 import authRoutes from './routes/authRoutes'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import adminRoute from './routes/adminRoutes'
-import { getOnePackage, getPackages } from './controllers/packageController'
-import { addBooking, getSingleBooking } from './controllers/booking'
+import { getPackages, getOnePackage } from './controllers/packageController'
 dotenv.config()
 const app = express()
+app.use(CookieParser())
 app.use(cors({
-  origin: "https://travel-world-frontend.vercel.app",
-  //origin: "*",
+  origin: "*",
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 
 }))
 app.use(express.json(
@@ -19,7 +20,6 @@ app.use(express.json(
     limit: '50mb'
   }
 ))
-// Route for login and registero
 app.get("/", (req, res) => {
   res.json("Server is running")
 })
@@ -30,8 +30,8 @@ app.use('/api/v1/admin', adminRoute)
 app.get('/api/v1/packages', getPackages)
 app.get('/api/v1/package/:id', getOnePackage)
 // Booking Route
-app.post('/api/v1/booking', addBooking)
-app.get('/api/v1/bookings/:id', getSingleBooking)
+//app.post('/api/v1/booking', addBooking)
+//app.get('/api/v1/bookings/:id', getSingleBooking)
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000")

@@ -13,12 +13,12 @@ export const ViewBooking = () => {
     try {
       setLoading(true)
       const response = await axios.get(`${config.apiUrl}/api/v1/admin/bookings`)
-      console.log(response.data)
+      console.log(`${response.data} This is data`)
       setBookingData(response.data)
       setLoading(false)
     } catch (e) {
 
-      console.log(e)
+      console.log("Error", e)
     }
   }
 
