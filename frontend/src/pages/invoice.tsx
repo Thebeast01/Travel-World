@@ -107,7 +107,7 @@ export const InvoicePage = () => {
           <tbody>
             <tr className="border-b">
               <td className="font-bold py-2">Booking ID:</td>
-              <td>{bookingDetails._id}</td>
+              <td>{bookingDetails.id}</td>
             </tr>
             <tr className="border-b">
               <td className="font-bold py-2">Customer Name:</td>

@@ -1,22 +1,44 @@
 import { Request, Response } from 'express'
-import fs from 'fs'
-import { TravelPackage } from '../db/db'
 import { uploadImageOnCloudinary } from '../utils/cloudinary'
+import { prisma } from '../db/db'
+import fs from 'fs'
 export const addPackage = async (req: Request, res: Response) => {
   const {
     title, description, price, availableDates
   } = req.body
 
   const localImagePath = req.file?.path
+  if (!localImagePath) {
+    res.json({
+      error: "Please upload an image"
+    })
+    return
+  }
   console.log("This is localImagePath", localImagePath)
+
   try {
     const imageUrl = await uploadImageOnCloudinary(localImagePath)
-    const newPackage = new TravelPackage({
-      title, description, price, availableDates, image: imageUrl
+    console.log("This is imageUrl", imageUrl)
+    if (!imageUrl) {
+      res.json({
+        error: "Error uploading image"
+      })
+      return
+    }
+
+    const parsedDates = typeof availableDates === 'string' ? JSON.parse(availableDates) : availableDates;
+    const newPackage = await prisma.package.create({
+      data: {
+        title: title,
+        description: description,
+        price: price,
+        availableDates: parsedDates,
+        image: imageUrl
+      }
     })
-    const savePackage = await newPackage.save()
-    res.json({ success: true, savePackage })
+    res.json({ success: true, newPackage })
   } catch (err) {
+    console.log("Error", err)
     res.json({
       error: err
     })
@@ -25,7 +47,7 @@ export const addPackage = async (req: Request, res: Response) => {
 //Get all packages
 export const getPackages = async (req: Request, res: Response) => {
   try {
-    const allPackage = await TravelPackage.find()
+    const allPackage = await prisma.package.findMany()
     res.json(allPackage)
   }
   catch (error) {
@@ -36,11 +58,14 @@ export const getPackages = async (req: Request, res: Response) => {
 }
 //Get a specific Package
 export const getOnePackage = async (req: Request, res: Response) => {
-
   const id = req.params.id
-  console.log(id)
+  console.log("This is id ", id)
   try {
-    const onePackage = await TravelPackage.findById(id)
+    const onePackage = await prisma.package.findUnique({
+      where: {
+        id: id
+      }
+    })
     res.json({
       msg: "Package Found",
       success: true,
@@ -54,19 +79,34 @@ export const getOnePackage = async (req: Request, res: Response) => {
     })
   }
 }
-// UPdate package
+//// Update package
 export const updatePackage = async (req: Request, res: Response) => {
   const id = req.params.id
+  const { title, description, price, availableDates } = req.body
   try {
-    const findPackage = await TravelPackage.findById(id)
-    if (!findPackage) {
-      res.json({
-        message: "Package Not Found",
-        success: false
-      })
-      return
-    }
-    const updatePackage = await TravelPackage.findByIdAndUpdate(id, req.body, { new: true })
+    //const findPackage = await prisma.package.findUnique({
+    //  where: {
+    //    id: id
+    //  }
+    //})
+    //if (!findPackage) {
+    //  res.json({
+    //    message: "Package Not Found",
+    //    success: false
+    //  })
+    //  return
+    //}
+    const updatePackage = await prisma.package.update({
+      where: {
+        id: id
+      },
+      data: {
+        title: title,
+        description: description,
+        price: price,
+        availableDates: availableDates
+      }
+    })
 
     res.json({
       message: "Package Updated",
@@ -74,6 +114,7 @@ export const updatePackage = async (req: Request, res: Response) => {
       data: updatePackage
     })
   } catch (error) {
+    alert("This is catch Block")
     res.json({
       message: "Package Not Found",
       success: false,
@@ -81,23 +122,23 @@ export const updatePackage = async (req: Request, res: Response) => {
     })
   }
 }
-
-
-export const deletePackage = async (req: Request, res: Response) => {
-  const id = req.params.id
-  try {
-    const deletePackage = await TravelPackage.findByIdAndDelete(id)
-
-    res.json({
-      message: "Package Deleted",
-      success: true,
-      deletedPackage: deletePackage
-    })
-  } catch (error) {
-    res.json({
-      message: "Package Not Found",
-      success: false,
-      error
-    })
-  }
-}
+//
+//
+//export const deletePackage = async (req: Request, res: Response) => {
+//  const id = req.params.id
+//  try {
+//    const deletePackage = await TravelPackage.findByIdAndDelete(id)
+//
+//    res.json({
+//      message: "Package Deleted",
+//      success: true,
+//      deletedPackage: deletePackage
+//    })
+//  } catch (error) {
+//    res.json({
+//      message: "Package Not Found",
+//      success: false,
+//      error
+//    })
+//  }
+//}

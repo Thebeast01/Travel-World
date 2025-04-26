@@ -1,5 +1,5 @@
 export interface Package {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -12,7 +12,7 @@ export interface packageCardProps extends Package {
   onDelete?: (id: string) => void;
 }
 export interface Booking {
-  _id: string;
+  id: string;
   name: string;
   email: string;
   phone: string;
